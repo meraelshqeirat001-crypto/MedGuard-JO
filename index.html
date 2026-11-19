@@ -149,13 +149,68 @@
     </div>
   </div>
 
-  <script>
-    document.getElementById("loginForm")
-      .addEventListener("submit", function(event) {
-        event.preventDefault();
-        document.getElementById("message").textContent =
-          "سيتم تفعيل تسجيل الدخول وربطه بقاعدة Firebase في الخطوة القادمة.";
-      });
-  </script>
+  
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+<script>
+  // Firebase Configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyD9SGu6M1EA0jdDWnFwXkbLtXwLB2dMGrw",
+    authDomain: "medguard-jo-44dea.firebaseapp.com",
+    projectId: "medguard-jo-44dea",
+    storageBucket: "medguard-jo-44dea.firebasestorage.app",
+    messagingSenderId: "618451106292",
+    appId: "1:618451106292:web:ef904e8f0c11286cf5e1a1",
+    measurementId: "G-RNYHFZPY2W"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Firebase Services
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  // Login Form
+  document.getElementById("loginForm")
+    .addEventListener("submit", async function(event) {
+
+      event.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const message = document.getElementById("message");
+
+      message.textContent = "جاري تسجيل الدخول...";
+
+      try {
+        const userCredential =
+          await auth.signInWithEmailAndPassword(email, password);
+
+        message.textContent =
+          "تم تسجيل الدخول بنجاح! مرحبًا بك في MedGuard-JO.";
+
+        console.log("Logged in user:", userCredential.user.uid);
+
+      } catch (error) {
+
+        console.error("Login error:", error);
+
+        if (error.code === "auth/invalid-credential") {
+          message.textContent =
+            "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+        } else if (error.code === "auth/too-many-requests") {
+          message.textContent =
+            "محاولات كثيرة. يرجى المحاولة لاحقًا.";
+        } else {
+          message.textContent =
+            "حدث خطأ أثناء تسجيل الدخول: " + error.message;
+        }
+      }
+    });
+</script>
 </body>
 </html>
