@@ -228,6 +228,47 @@
         }
       }
     });
+  // Step 6.3 - Read User Data from Firestore
+
+firebase.auth().onAuthStateChanged(async (user) => {
+
+  if (user) {
+    try {
+      const uid = user.uid;
+
+      const db = firebase.firestore();
+
+      const userDoc = await db.collection("users").doc(uid).get();
+
+      if (userDoc.exists) {
+        const userData = userDoc.data();
+
+        document.getElementById("userFullName").textContent =
+          userData.fullName || "غير متوفر";
+
+        document.getElementById("userEmail").textContent =
+          userData.email || user.email || "غير متوفر";
+
+        document.getElementById("userRole").textContent =
+          userData.role || "غير محدد";
+
+        document.getElementById("userProfile").style.display = "block";
+
+        console.log("User data loaded successfully:", userData);
+
+      } else {
+        console.log("User document not found in Firestore.");
+      }
+
+    } catch (error) {
+      console.error("Error reading user data:", error);
+    }
+
+  } else {
+    document.getElementById("userProfile").style.display = "none";
+  }
+
+});
 </script>
 </body>
 </html>
