@@ -231,44 +231,49 @@
         }
       }
     });
-  // Step 6.3 - Read User Data from Firestore
+ // Step 6.4 - Debug Firestore User Data
 
 firebase.auth().onAuthStateChanged(async (user) => {
 
-  if (user) {
-    try {
-      const uid = user.uid;
+  const debug = document.getElementById("debugStatus");
 
-      const db = firebase.firestore();
+  if (!user) {
+    debug.textContent = "لم يتم التعرف على مستخدم مسجل الدخول.";
+    document.getElementById("userProfile").style.display = "none";
+    return;
+  }
 
-      const userDoc = await db.collection("users").doc(uid).get();
+  debug.textContent = "تم التعرف على المستخدم. جاري قراءة Firestore...";
 
-      if (userDoc.exists) {
-        const userData = userDoc.data();
+  try {
+    const uid = user.uid;
+    const db = firebase.firestore();
 
-        document.getElementById("userFullName").textContent =
-          userData.fullName || "غير متوفر";
+    const userDoc = await db.collection("users").doc(uid).get();
 
-        document.getElementById("userEmail").textContent =
-          userData.email || user.email || "غير متوفر";
+    if (userDoc.exists) {
+      const userData = userDoc.data();
 
-        document.getElementById("userRole").textContent =
-          userData.role || "غير محدد";
+      document.getElementById("userFullName").textContent =
+        userData.fullName || "غير متوفر";
 
-        document.getElementById("userProfile").style.display = "block";
+      document.getElementById("userEmail").textContent =
+        userData.email || user.email || "غير متوفر";
 
-        console.log("User data loaded successfully:", userData);
+      document.getElementById("userRole").textContent =
+        userData.role || "غير محدد";
 
-      } else {
-        console.log("User document not found in Firestore.");
-      }
+      document.getElementById("userProfile").style.display = "block";
 
-    } catch (error) {
-      console.error("Error reading user data:", error);
+      debug.textContent = "نجاح! تم جلب بيانات المستخدم من Firestore.";
+
+    } else {
+      debug.textContent = "المستخدم مسجل، لكن وثيقته غير موجودة في users.";
     }
 
-  } else {
-    document.getElementById("userProfile").style.display = "none";
+  } catch (error) {
+    debug.textContent = "فشل جلب البيانات: " + error.message;
+    console.error("Firestore Error:", error);
   }
 
 });
