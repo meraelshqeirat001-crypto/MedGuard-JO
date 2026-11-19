@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123b5d">
+  <meta name="description" content="MedGuard-JO - تطبيقك لتنظيم الأدوية ومتابعة الأعراض والسجل الصحي اليومي">
+  <title>MedGuard-JO | رفيقك الصحي</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="MedGuard-JO">
+        <span class="brand-mark">✚</span>
+        <span><b>MedGuard-JO</b><small data-i18n="tagline">رفيقك لإدارة صحتك</small></span>
+      </a>
+      <div class="top-actions">
+        <button id="langBtn" class="icon-btn" type="button" aria-label="Change language">EN</button>
+        <button id="logoutBtn" class="icon-btn hidden" type="button" data-i18n="logout">خروج</button>
+      </div>
+    </header>
+
+    <section id="authView" class="auth-layout">
+      <div class="welcome-panel">
+        <div class="hero-symbol">✚</div>
+        <p class="eyebrow" data-i18n="welcomeEyebrow">صحتك تستحق عناية منظمة</p>
+        <h1 data-i18n="welcomeTitle">كل أدويتك ومتابعتك الصحية في مكان واحد</h1>
+        <p class="muted" data-i18n="welcomeText">نظّم أدويتك، سجّل أعراضك، وتابع يومك الصحي بسهولة وأمان.</p>
+        <div class="trust-points">
+          <span>✓ <span data-i18n="point1">تنظيم الأدوية</span></span>
+          <span>✓ <span data-i18n="point2">متابعة الأعراض</span></span>
+          <span>✓ <span data-i18n="point3">سجل صحي يومي</span></span>
+        </div>
+      </div>
+      <div class="auth-card">
+        <div class="auth-tabs">
+          <button class="tab active" id="loginTab" data-i18n="login">تسجيل الدخول</button>
+          <button class="tab" id="signupTab" data-i18n="signup">إنشاء حساب</button>
+        </div>
+        <form id="authForm">
+          <h2 id="authHeading" data-i18n="loginTitle">مرحباً بعودتك</h2>
+          <label><span data-i18n="email">البريد الإلكتروني</span><input id="email" type="email" autocomplete="email" placeholder="name@example.com" required></label>
+          <label><span data-i18n="password">كلمة المرور</span><input id="password" type="password" autocomplete="current-password" minlength="6" placeholder="••••••••" required></label>
+          <label id="nameField" class="hidden"><span data-i18n="fullName">الاسم الكامل</span><input id="fullName" type="text" autocomplete="name"></label>
+          <button class="primary-btn full" id="authSubmit" type="submit" data-i18n="login">تسجيل الدخول</button>
+          <p class="fine-print" data-i18n="authNote">بياناتك الصحية خاصة بك. لا تشارك كلمة المرور مع أي شخص.</p>
+          <p id="authError" class="error-text" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="appView" class="hidden">
+      <div class="dashboard-head">
+        <div><p class="eyebrow" data-i18n="overview">نظرة عامة</p><h1><span data-i18n="hello">أهلاً بك</span> <span id="userName">👋</span></h1><p class="muted" data-i18n="todayPrompt">تابع صحتك وخذ أدويتك بانتظام.</p></div>
+        <div class="date-pill" id="todayDate"></div>
+      </div>
+      <nav class="nav-tabs" aria-label="Main navigation">
+        <button class="nav-btn active" data-page="home"><span>⌂</span><b data-i18n="home">الرئيسية</b></button>
+        <button class="nav-btn" data-page="meds"><span>▤</span><b data-i18n="medications">أدويتي</b></button>
+        <button class="nav-btn" data-page="symptoms"><span>♡</span><b data-i18n="symptoms">الأعراض</b></button>
+        <button class="nav-btn" data-page="daily"><span>✓</span><b data-i18n="dailyLog">السجل اليومي</b></button>
+      </nav>
+
+      <section id="page-home" class="page">
+        <div class="stat-grid">
+          <article class="stat-card"><span class="stat-icon blue">▤</span><div><small data-i18n="totalMeds">إجمالي الأدوية</small><strong id="medCount">0</strong></div></article>
+          <article class="stat-card"><span class="stat-icon mint">♡</span><div><small data-i18n="symptomEntries">سجلات الأعراض</small><strong id="symptomCount">0</strong></div></article>
+          <article class="stat-card"><span class="stat-icon gold">✓</span><div><small data-i18n="dailyEntries">السجلات اليومية</small><strong id="dailyCount">0</strong></div></article>
+        </div>
+        <div class="section-heading"><div><p class="eyebrow" data-i18n="quickAccess">وصول سريع</p><h2 data-i18n="healthTools">أدواتك الصحية</h2></div></div>
+        <div class="quick-grid">
+          <button class="quick-card" data-go="meds"><span class="quick-icon blue">＋</span><b data-i18n="addMedication">إضافة دواء</b><small data-i18n="addMedicationDesc">سجّل دواءً جديداً ومواعيده</small></button>
+          <button class="quick-card" data-go="symptoms"><span class="quick-icon pink">♡</span><b data-i18n="recordSymptom">تسجيل عرض</b><small data-i18n="recordSymptomDesc">دوّن ما تشعر به اليوم</small></button>
+          <button class="quick-card" data-go="daily"><span class="quick-icon green">✓</span><b data-i18n="dailyCheck">متابعة يومية</b><small data-i18n="dailyCheckDesc">أضف ملاحظة إلى سجلك الصحي</small></button>
+        </div>
+        <div class="notice"><span>ⓘ</span><p data-i18n="medicalNotice">MedGuard-JO أداة مساعدة للتنظيم والتوثيق، ولا يستبدل استشارة الطبيب أو تعليمات الصيدلي. لا تغيّر جرعات أدويتك دون الرجوع إلى مختص.</p></div>
+      </section>
+
+      <section id="page-meds" class="page hidden">
+        <div class="section-heading"><div><p class="eyebrow" data-i18n="yourTreatment">خطتك العلاجية</p><h2 data-i18n="medications">أدويتي</h2></div></div>
+        <form id="medForm" class="form-card">
+          <h3 data-i18n="newMedication">إضافة دواء جديد</h3>
+          <div class="form-grid">
+            <label><span data-i18n="medName">اسم الدواء</span><input id="medName" required maxlength="80" placeholder="مثال: Paracetamol"></label>
+            <label><span data-i18n="dose">الجرعة</span><input id="medDose" maxlength="60" placeholder="مثال: 500 mg"></label>
+            <label><span data-i18n="frequency">عدد المرات / التكرار</span><input id="medFrequency" maxlength="80" placeholder="مثال: مرتان يومياً"></label>
+            <label><span data-i18n="time">وقت التناول</span><input id="medTime" type="time"></label>
+          </div>
+          <label><span data-i18n="medNotes">ملاحظات</span><input id="medNotes" maxlength="180" placeholder=""></label>
+          <button class="primary-btn" type="submit" data-i18n="saveMedication">حفظ الدواء</button>
+        </form>
+        <div id="medList" class="record-list"></div>
+      </section>
+
+      <section id="page-symptoms" class="page hidden">
+        <div class="section-heading"><div><p class="eyebrow" data-i18n="healthDiary">مذكراتك الصحية</p><h2 data-i18n="symptoms">الأعراض</h2></div></div>
+        <form id="symptomForm" class="form-card">
+          <h3 data-i18n="recordNewSymptom">تسجيل عرض جديد</h3>
+          <div class="form-grid">
+            <label><span data-i18n="symptom">العرض</span><input id="symptomName" required maxlength="80" placeholder="مثال: صداع"></label>
+            <label><span data-i18n="severity">شدة العرض</span><select id="severity"><option value="1" data-i18n="mild">خفيف</option><option value="2" data-i18n="moderate">متوسط</option><option value="3" data-i18n="severe">شديد</option></select></label>
+          </div>
+          <label><span data-i18n="details">التفاصيل / متى بدأ؟</span><textarea id="symptomDetails" rows="3" maxlength="500"></textarea></label>
+          <button class="primary-btn" type="submit" data-i18n="saveEntry">حفظ السجل</button>
+        </form>
+        <div id="symptomList" class="record-list"></div>
+      </section>
+
+      <section id="page-daily" class="page hidden">
+        <div class="section-heading"><div><p class="eyebrow" data-i18n="dailyTracking">متابعة مستمرة</p><h2 data-i18n="dailyLog">السجل اليومي</h2></div></div>
+        <form id="dailyForm" class="form-card">
+          <h3 data-i18n="dailyEntry">إضافة سجل اليوم</h3>
+          <label><span data-i18n="howFeeling">كيف تشعر اليوم؟</span><select id="mood"><option data-i18n="good">جيد</option><option data-i18n="okay">مقبول</option><option data-i18n="tired">متعب</option></select></label>
+          <label><span data-i18n="dailyNotes">ملاحظات صحية</span><textarea id="dailyNotes" rows="4" maxlength="600" placeholder=""></textarea></label>
+          <button class="primary-btn" type="submit" data-i18n="saveEntry">حفظ السجل</button>
+        </form>
+        <div id="dailyList" class="record-list"></div>
+      </section>
+      <footer class="app-footer"><span>MedGuard-JO</span><span data-i18n="footerText">صحتك أولويتنا</span></footer>
+    </section>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
