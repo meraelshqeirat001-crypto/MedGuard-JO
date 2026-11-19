@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedGuard-JO | الرعاية الصحية</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #e8f5f5, #f4f8fc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      width: 100%;
+      max-width: 420px;
+      padding: 35px 25px;
+      border-radius: 22px;
+      box-shadow: 0 10px 35px rgba(0, 70, 90, 0.12);
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      color: #087e8b;
+      margin: 5px 0;
+      font-size: 30px;
+    }
+
+    .subtitle {
+      color: #687b85;
+      margin-bottom: 30px;
+      line-height: 1.8;
+    }
+
+    .field {
+      text-align: right;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      color: #344b55;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d6e3e8;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #087e8b;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #087e8b;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #06636e;
+    }
+
+    .footer {
+      color: #82939b;
+      font-size: 12px;
+      margin-top: 25px;
+    }
+
+    #message {
+      color: #087e8b;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo">🩺</div>
+
+    <h1>MedGuard-JO</h1>
+
+    <p class="subtitle">
+      نظام الرعاية الصحية وإدارة المرضى
+      <br>
+      أهلاً بك، سجّل الدخول للمتابعة
+    </p>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="email">البريد الإلكتروني</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="أدخل بريدك الإلكتروني"
+          required
+        >
+      </div>
+
+      <div class="field">
+        <label for="password">كلمة المرور</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="أدخل كلمة المرور"
+          required
+        >
+      </div>
+
+      <button type="submit">تسجيل الدخول</button>
+    </form>
+
+    <p id="message"></p>
+
+    <div class="footer">
+      MedGuard-JO © 2026
+      <br>
+      Healthcare Management System
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm")
+      .addEventListener("submit", function(event) {
+        event.preventDefault();
+        document.getElementById("message").textContent =
+          "سيتم تفعيل تسجيل الدخول وربطه بقاعدة Firebase في الخطوة القادمة.";
+      });
+  </script>
+</body>
+</html>
