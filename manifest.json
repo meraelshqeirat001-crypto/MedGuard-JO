@@ -1,0 +1,26 @@
+{
+  "name": "MedGuard-JO",
+  "short_name": "MedGuard",
+  "description": "Bilingual medication safety app for older adults and caregivers in Jordan",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f2f8fb",
+  "theme_color": "#087f8c",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
